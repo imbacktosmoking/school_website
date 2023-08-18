@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+
+    body{
+        background-color: rgb(255, 255, 255);
+    }
+</style> <title> MMIS reference </title>
+<div class="container">
+
+<h1 class="text-center"> {{post.title}} </h1> 
+
+
+
+
+<h3 class="text-center">  {{post.author}} </h3> 
+
+<h4 class="text-center"> {{post.body}} </h4>
+
+</div>
+</body>
+</html>
+
+{% endblock %}

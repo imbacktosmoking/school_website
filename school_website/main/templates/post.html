@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+
+    body{
+        background-color: rgb(255, 255, 255);
+    }
+</style>
+<title> MMIS notes </title>
+
+<div class="container-fluid">
+<h1> Create a post  </h1> 
+<div class="mb-3">
+<form method="POST">
+
+{% csrf_token %}
+{{form.as_p}}
+<button> Post </button>
+
+
+
+</form>
+</div>
+</div>
+
+</body>
+</body>
+</html>
+{% endblock %}

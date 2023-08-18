@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% block content %}
+  <h1>{{ subject.name }}</h1>
+  <ul>
+    {% for post in subject.post_set.all %}
+      <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

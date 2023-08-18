@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content%}
+
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <style>
+
+            body{
+                background-color: rgb(255, 255, 255);
+            }
+        </style>
+
+<title> MMIS notes </title>
+
+
+
+<h1 class="text-center"> Hello {{user.username}} </h1>
+
+{% for post in object_list %}
+{% if post.subject.name == 'Physics'%}
+<a href="{%url 'details' post.pk%}" > <h2> {{post.title}} </h2> </a> 
+     <h1> {{post.author}}</h1>
+
+{% else %}
+
+{% endif %}
+{% endfor %}
+
+    </body>
+</html>
+{% endblock %}

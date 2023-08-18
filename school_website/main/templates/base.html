@@ -1,0 +1,118 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> MMIS notes </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage'%}">
+                <img src="{% static 'mmis.png'%}" alt="logo" width="250" height="100">
+        
+            </a>
+
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+                {% if user.is_authenticated%}
+                <!-- offcanvas link--> 
+     <li class="nav-item">
+        <a class="nav-link" href="#sidebar" data-bs-toggle="offcanvas"
+        role="button" aria-controls="sidebar"> Subjects and more</a>
+
+       <!-- end offcanvas link--> 
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              
+              <!-- create note-->
+              {% if user.is_staff%}
+       <li class="nav-item">
+                          <a class="nav-link" href="{% url 'post'%}"> Create note!</a>
+                          {% endif %}
+              <!-- end of create note-->
+             
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+<!-- If user is not a member -->
+              {% else %}
+       <li class="nav-item">
+       <a class="nav-link" href="{% url 'register'%}"> Register</a>
+       </li>
+                           <li class="nav-item">
+                          <a class="nav-link" href="{% url 'login'%}"> Login </a>
+                           </li>
+      
+      {%endif %}
+<!-- end of if user is not member-->
+          </div>
+        </div>
+      </nav> 
+   
+      <!-- end of navbar -->
+ <!-- off canvas--> 
+   <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebar-label">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebar-label"> Subjects and more</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" ari-label="Close">
+
+        </button>
+    </div>
+
+    <!-- content of canvas -->
+
+    <div class="offcanvas-body">
+{% if user.student.strand == 'STEM' and user.student.grade_level == '12'%}
+<li>
+<a href="{% url 'physics'%}"> Physics</a>
+</li>
+
+{% elif user.student.strand == 'ABM' and user.student.grade_level == '12'%}
+{% elif user.student.strand == 'HUMMS' and user.student.grade_level == '12'%}
+{% elif user.student.strand == 'STEM' and user.student.grade_level == '11'%}
+{% elif user.student.strand == 'ABM' and user.student.grade_level == '11'%}
+{% elif user.student.strand == 'HUMMS' and user.student.grade_level == '11'%}
+{% elif user.is_staff%}
+<li>
+<a href="{% url 'post'%}"> Create note</a>
+</li>
+{% endif %}
+<a href="{% url 'logout' %}">Logout</a>
+
+
+    </div>
+    </div>
+    <!-- end ofcontent of canvas-->
+
+
+{% block content%}
+
+{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>
