@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Student, Post
+from .models import Student, Post, Teacher
 from django.contrib.auth.models import User
 
 class RegistrationForm(UserCreationForm):
@@ -14,7 +14,8 @@ class RegistrationForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     def __init__(self, teacher, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['subject'].queryset = teacher.subjects.all()
+        teacher_instance = Teacher.objects.get(teacher=teacher)
+        self.fields['subject'].queryset = teacher_instance.subjects.all()
 
     class Meta:
         model = Post 

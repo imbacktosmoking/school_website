@@ -22,16 +22,6 @@ class Teacher(models.Model):
         return self.teacher.username
 
 
-class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    body = models.TextField()
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-
-
-    def __str__(self):
-        return self.title
-
 
 
 class Student(models.Model):
@@ -58,7 +48,16 @@ class Category(models.Model):
     title = models.CharField(max_length=100)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
 
+
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    body = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)  
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE) 
     def __str__(self):
         return self.title
 

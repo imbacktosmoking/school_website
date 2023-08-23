@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from main.views import RegistrationView, Homepage, Physics, Details, create_post, Category
+from main.views import RegistrationView, Homepage, Physics, Details, create_post, CategoryDetailView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
@@ -15,6 +15,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('login/', LoginView.as_view(), name='login'),
     path('details/<int:pk>', Details.as_view(), name="details"),
+    path('category/<int:pk>', CategoryDetailView.as_view(), name="category"), 
     path('physics/', Physics.as_view(), name="physics"),
     path('post/', create_post, name="post"),
     path('', Homepage.as_view(), name="homepage"),

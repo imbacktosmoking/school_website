@@ -37,6 +37,18 @@ class Details(DetailView):
     model = Post
     template_name = 'details.html'
 
+class CategoryDetailView(DetailView):
+    model = Category 
+    template_name = 'category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Filter posts based on the category or subject associated with the current view
+        context['posts'] = Post.objects.filter(category=self.object)  # You can use 'subject' here too if needed
+        
+        return context
+
 
 
 class Physics(ListView):
@@ -46,15 +58,23 @@ class Physics(ListView):
 
 
 def create_post(request):
-    teacher = Teacher.objects.get(teacher=request.user)
-
     if request.method == 'POST':
-        form = PostForm(teacher, request.POST)
+        form = PostForm(request.user, request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+
+            teacher = Teacher.objects.get(teacher=request.user)
+            chosen_subject = post.subject
+
+            try:
+                category = Category.objects.get(subject=chosen_subject)
+            except Category.DoesNotExist:
+                return render(request, 'error.html', {'error_message': 'Category not found for the chosen subject'})
+
+            post.category = category
             post.save()
             return redirect('homepage')
     else:
-        form = PostForm(teacher)
+        form = PostForm(request.user)
     return render(request, 'post.html', {'form': form})

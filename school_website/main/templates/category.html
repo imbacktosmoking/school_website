@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
-{% block content %}
 
 {% block content %}
-  <h1>{{ subject.name }}</h1>
+<div class="container text-center">
+  <h1 class="text-center">{{ category.subject.name }}</h1>
   <ul>
-    {% for post in subject.post_set.all %}
-      <li><a href="{% url 'post' post.pk %}">{{ post.title }}</a></li>
+    {% for post in posts %}
+      {% if category.subject.name == "Physics" and post.subject.name == "Physics" %}
+      <a href="{%url 'details' post.pk%}" > <h2> {{post.title}} </h2> </a> 
+      <h1> {{post.author}}</h1>
+
+        {% elif category.subject.name == "Empowerment_Technologies" and post.subject.name == "Empowerment_Technologies" %}
+
+        <a href="{%url 'details' post.pk%}" > <h2> {{post.title}} </h2> </a> 
+        <h1> {{post.author}}</h1>
+
+             {% elif category.subject.name == "Media_and_Information_Literacy" and post.subject.name == "Media_and_Information_Literacy" %}
+
+        <a href="{%url 'details' post.pk%}" > <h2> {{post.title}} </h2> </a> 
+        <h1> {{post.author}}</h1>
+
+      {% endif %}
     {% endfor %}
   </ul>
-
+  </div>
 {% endblock %}
